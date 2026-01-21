@@ -1,0 +1,22 @@
+{
+    "name": "productivity-tamagotchi",
+    "version": "1.0.0",
+    "description": "A robust Productivity Tamagotchi app built with Electron",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "keywords": [
+        "electron",
+        "tamagotchi",
+        "productivity"
+    ],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "electron-store": "^8.1.0"
+    },
+    "devDependencies": {
+        "electron": "^28.0.0"
+    }
+}

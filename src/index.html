@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productivity Tamagotchi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="shop_style.css">
+    <!-- Using FontAwesome for icons (optional, or just unicode) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="window-controls">
+        <div class="drag-region">Productivity Pet</div>
+        <button id="minimize-btn" title="Minimize to Tray"><i class="fas fa-minus"></i></button>
+        <button id="always-on-top-btn" title="Always on Top"><i class="fas fa-thumbtack"></i></button>
+    </div>
+
+    <div class="app-container">
+        <!-- Pet Section -->
+        <div class="pet-section">
+            <div id="pet-display" class="pet-avatar">
+                <!-- Emoji/SVG based on state -->
+                <span id="pet-emoji">🥚</span>
+            </div>
+            <div class="pet-status-text">
+                <span id="pet-mood">Initial Mood</span> | Lvl <span id="level-val">1</span>
+            </div>
+        </div>
+
+        <!-- Stats Bars -->
+        <div class="stats-section">
+            <div class="stat-row">
+                <i class="fas fa-heart" style="color: #ff6b6b;"></i>
+                <div class="progress-bar">
+                    <div id="bar-health" class="fill" style="width: 100%; background: #ff6b6b;"></div>
+                </div>
+            </div>
+            <div class="stat-row">
+                <i class="fas fa-smile" style="color: #feca57;"></i>
+                <div class="progress-bar">
+                    <div id="bar-happiness" class="fill" style="width: 100%; background: #feca57;"></div>
+                </div>
+            </div>
+            <div class="stat-row">
+                <i class="fas fa-tint" style="color: #48dbfb;"></i>
+                <div class="progress-bar">
+                    <div id="bar-hydration" class="fill" style="width: 100%; background: #48dbfb;"></div>
+                </div>
+            </div>
+            <div class="stat-row">
+                <i class="fas fa-bolt" style="color: #ff9f43;"></i>
+                <div class="progress-bar">
+                    <div id="bar-energy" class="fill" style="width: 100%; background: #ff9f43;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="actions-section">
+            <button id="btn-water" title="Drink Water"><i class="fas fa-glass-water"></i></button>
+            <button id="btn-sleep" title="Sleep"><i class="fas fa-bed"></i></button>
+            <button id="btn-shop" title="Shop (Coming Soon)"><i class="fas fa-store"></i></button>
+        </div>
+
+        <!-- Task Manager -->
+        <div class="tasks-section">
+            <h3>Tasks</h3>
+            <div class="input-group">
+                <input type="text" id="task-input" placeholder="New task...">
+                <button id="add-task-btn">+</button>
+            </div>
+            <ul id="task-list">
+                <!-- Tasks go here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Shop Modal -->
+    <div id="shop-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Shop</h3>
+            <div class="shop-item" data-id="bg-forest" data-price="50">
+                <span>🌲 Forest BG</span> <span>50 🪙</span>
+            </div>
+            <div class="shop-item" data-id="bg-space" data-price="100">
+                <span>🌌 Space BG</span> <span>100 🪙</span>
+            </div>
+            <div class="shop-item" data-id="skin-cat" data-price="200">
+                <span>🐱 Cat Skin</span> <span>200 🪙</span>
+            </div>
+            <button id="close-shop">Close</button>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+
+</html>
