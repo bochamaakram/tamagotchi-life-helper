@@ -148,6 +148,11 @@ ipcMain.on('buy-item', (event, itemId) => {
     }
 });
 
+ipcMain.on('toggle-work', () => {
+    const isWorking = pet.toggleWork();
+    sendUpdate();
+});
+
 function checkStatusForNotifications() {
     const status = pet.getstatus();
     if (status === 'thirsty' || status === 'sad' || status === 'sick') {

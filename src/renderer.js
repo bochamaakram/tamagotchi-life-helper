@@ -16,6 +16,7 @@ const taskList = document.getElementById('task-list');
 
 const btnWater = document.getElementById('btn-water');
 const btnSleep = document.getElementById('btn-sleep');
+const btnWork = document.getElementById('btn-work');
 const btnShop = document.getElementById('btn-shop'); // Placeholder
 const btnMinimize = document.getElementById('minimize-btn');
 const btnAlwaysOnTop = document.getElementById('always-on-top-btn');
@@ -27,6 +28,7 @@ const MOOD_EMOJIS = {
     'sick': '🤢',
     'thirsty': '🥵',
     'sleeping': '😴',
+    'working': '👨‍💻',
     'default': '😐'
 };
 
@@ -215,6 +217,14 @@ btnWater.addEventListener('click', () => {
 btnSleep.addEventListener('click', () => {
     ipcRenderer.send('sleep-pet');
     showToast('Zzz... 😴');
+});
+
+btnWork.addEventListener('click', () => {
+    ipcRenderer.send('toggle-work');
+    // Toast handled by state update or we can guess
+    // Ideally main process confirms, but for responsiveness:
+    // showToast('Focus Mode Toggled! 🧠'); 
+    // Let's wait for update to see the emoji change
 });
 
 addTaskBtn.addEventListener('click', () => {

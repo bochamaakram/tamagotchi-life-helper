@@ -5,8 +5,12 @@ class Pet {
             health: 100,
             happiness: 100,
             energy: 100,
+            health: 100,
+            happiness: 100,
+            energy: 100,
             hydration: 100
         };
+        this.isWorking = false; // Runtime state, maybe persist if needed but runtime is fine for now
         this.levelInfo = this.store.get('petLevel') || {
             level: 1,
             xp: 0,
@@ -57,6 +61,11 @@ class Pet {
         this.save();
     }
 
+    toggleWork() {
+        this.isWorking = !this.isWorking;
+        return this.isWorking;
+    }
+
     addXp(amount) {
         this.levelInfo.xp += amount;
         if (this.levelInfo.xp >= this.levelInfo.maxXp) {
@@ -87,8 +96,9 @@ class Pet {
     getstatus() {
         // Determine visual state based on stats
         if (this.stats.health < 30) return 'sick';
+        if (this.stats.energy < 30) return 'sleeping'; // Auto sleep if too tired? Or just look tired
+        if (this.isWorking) return 'working'; // Override others if working, but health/energy take precedence if critical
         if (this.stats.hydration < 30) return 'thirsty';
-        if (this.stats.energy < 30) return 'sleeping'; // or tired
         if (this.stats.happiness < 30) return 'sad';
         return 'happy';
     }
