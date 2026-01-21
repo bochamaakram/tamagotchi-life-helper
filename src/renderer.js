@@ -46,7 +46,7 @@ function updateUI(data) {
     petMood.textContent = petState.charAt(0).toUpperCase() + petState.slice(1);
 
     // Level & Coins & Age
-    levelVal.textContent = `Lvl ${levelInfo.level} | 🪙 ${levelInfo.coins || 0} | 📅 ${data.age}d`;
+    levelVal.innerHTML = `Lvl ${levelInfo.level} | <i class="fas fa-coins" style="color:#f1c40f;"></i> ${levelInfo.coins || 0} | <i class="fas fa-calendar-alt" style="color:#3498db;"></i> ${data.age}d`;
 
     // Stats
     barHealth.style.width = `${stats.health}%`;
@@ -158,7 +158,7 @@ startBtn.addEventListener('click', () => {
 function showToast(message) {
     const toast = document.createElement('div');
     toast.className = 'toast';
-    toast.textContent = message;
+    toast.innerHTML = message;
     toastContainer.appendChild(toast);
 
     setTimeout(() => {
@@ -196,27 +196,28 @@ document.querySelectorAll('.shop-item').forEach(item => {
 // For now, let's wrap the IPC calls or listen to replies.
 
 ipcRenderer.on('shop-success', (event, itemId) => {
-    showToast(`Purchased ${itemId}!`);
     const name = itemId.split('-')[1];
+    showToast(`Purchased ${name}! <i class="fas fa-check"></i>`);
+    const itemName = itemId.split('-')[1];
     if (itemId.startsWith('bg-')) {
-        document.body.className = `bg-${name}`;
+        document.body.className = `bg-${itemName}`;
     }
 });
 
 ipcRenderer.on('shop-error', (event, msg) => {
-    showToast(`❌ ${msg}`);
+    showToast(`<i class="fas fa-times-circle"></i> ${msg}`);
 });
 
 // Override buttons to add animations
 btnWater.addEventListener('click', () => {
     ipcRenderer.send('drink-water');
-    showToast('Glug glug! 💧');
+    showToast('<i class="fas fa-glass-water"></i> Glug glug!');
     playPetAnimation('bounce');
 });
 
 btnSleep.addEventListener('click', () => {
     ipcRenderer.send('sleep-pet');
-    showToast('Zzz... 😴');
+    showToast('<i class="fas fa-bed"></i> Resting...');
 });
 
 btnWork.addEventListener('click', () => {
@@ -232,7 +233,7 @@ addTaskBtn.addEventListener('click', () => {
     if (text) {
         ipcRenderer.send('add-task', text);
         taskInput.value = '';
-        showToast('Task added! 📝');
+        showToast('<i class="fas fa-check"></i> Task added!');
     }
 });
 

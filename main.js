@@ -28,7 +28,7 @@ function createWindow() {
             nodeIntegration: true,
             contextIsolation: false
         },
-        icon: path.join(__dirname, 'assets', 'icon.png')
+        // icon: path.join(__dirname, 'assets', 'icon.png')
     });
 
     mainWindow.loadFile('src/index.html');
@@ -66,6 +66,7 @@ function sendUpdate() {
 app.whenReady().then(() => {
     createWindow();
 
+    /*
     tray = new Tray(path.join(__dirname, 'assets/icon.png'));
     const contextMenu = Menu.buildFromTemplate([
         {
@@ -78,6 +79,7 @@ app.whenReady().then(() => {
     ]);
     tray.setToolTip('Productivity Tamagotchi');
     tray.setContextMenu(contextMenu);
+    */
 
     // Decay interval in main process triggers UI updates
     setInterval(() => {
