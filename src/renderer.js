@@ -134,10 +134,45 @@ btnAlwaysOnTop.addEventListener('click', () => {
     ipcRenderer.send('toggle-always-on-top');
 });
 
-// Shop Logic
 const shopModal = document.getElementById('shop-modal');
 const closeShopBtn = document.getElementById('close-shop');
+// Onboarding Elements
+const onboardingOverlay = document.getElementById('onboarding-overlay');
+const startBtn = document.getElementById('start-btn');
+const toastContainer = document.getElementById('toast-container');
 
+// Check Onboarding
+if (!localStorage.getItem('onboardingShown')) {
+    onboardingOverlay.classList.remove('hidden');
+}
+
+startBtn.addEventListener('click', () => {
+    onboardingOverlay.classList.add('hidden');
+    localStorage.setItem('onboardingShown', 'true');
+    playPetAnimation('bounce');
+});
+
+// Toast System
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Animation
+function playPetAnimation(anim) {
+    petEmoji.parentElement.classList.remove('bounce');
+    void petEmoji.parentElement.offsetWidth; // trigger reflow
+    petEmoji.parentElement.classList.add(anim);
+}
+
+// Interactions with Feedback
 btnShop.addEventListener('click', () => {
     shopModal.classList.remove('hidden');
 });
@@ -149,9 +184,50 @@ closeShopBtn.addEventListener('click', () => {
 document.querySelectorAll('.shop-item').forEach(item => {
     item.addEventListener('click', () => {
         const id = item.dataset.id;
+        // Highlight logic could go here
         ipcRenderer.send('buy-item', id);
-        // Optionally close modal or give feedback immediately
-        // shopModal.classList.add('hidden'); 
     });
 });
+
+// Hooking into existing events for feedback
+// We need to modify existing listeners or add new generic ones if possible. 
+// For now, let's wrap the IPC calls or listen to replies.
+
+ipcRenderer.on('shop-success', (event, itemId) => {
+    showToast(`Purchased ${itemId}!`);
+    const name = itemId.split('-')[1];
+    if (itemId.startsWith('bg-')) {
+        document.body.className = `bg-${name}`;
+    }
+});
+
+ipcRenderer.on('shop-error', (event, msg) => {
+    showToast(`❌ ${msg}`);
+});
+
+// Override buttons to add animations
+btnWater.addEventListener('click', () => {
+    ipcRenderer.send('drink-water');
+    showToast('Glug glug! 💧');
+    playPetAnimation('bounce');
+});
+
+btnSleep.addEventListener('click', () => {
+    ipcRenderer.send('sleep-pet');
+    showToast('Zzz... 😴');
+});
+
+addTaskBtn.addEventListener('click', () => {
+    const text = taskInput.value.trim();
+    if (text) {
+        ipcRenderer.send('add-task', text);
+        taskInput.value = '';
+        showToast('Task added! 📝');
+    }
+});
+
+// Listen for task completion (requires delegated event or update)
+// Since we clear task list on update, we rely on rendering logic.
+// We can assume if stats go up, we might want to animate, but let's keep it simple.
+
 
