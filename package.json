@@ -4,7 +4,8 @@
     "description": "A robust Productivity Tamagotchi app built with Electron",
     "main": "main.js",
     "scripts": {
-        "start": "electron ."
+        "start": "electron . --no-sandbox",
+        "electron:dev": "electron . --no-sandbox"
     },
     "keywords": [
         "electron",
