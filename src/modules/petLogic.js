@@ -8,15 +8,23 @@ class Pet {
             health: 100,
             happiness: 100,
             energy: 100,
+            health: 100,
+            happiness: 100,
+            energy: 100,
             hydration: 100
         };
-        this.isWorking = false; // Runtime state, maybe persist if needed but runtime is fine for now
+        this.isWorking = false;
+        this.isSleeping = false;
         this.levelInfo = this.store.get('petLevel') || {
             level: 1,
             xp: 0,
             maxXp: 100,
+            maxXp: 100,
             coins: 0
         };
+        this.createdAt = this.store.get('petCreatedAt') || Date.now();
+        if (!this.store.get('petCreatedAt')) this.store.set('petCreatedAt', this.createdAt);
+
         this.decayInterval = null;
     }
 
@@ -63,7 +71,20 @@ class Pet {
 
     toggleWork() {
         this.isWorking = !this.isWorking;
+        if (this.isWorking) this.isSleeping = false; // Wake up if working
         return this.isWorking;
+    }
+
+    toggleSleep() {
+        this.isSleeping = !this.isSleeping;
+        if (this.isSleeping) this.isWorking = false; // Stop working if sleeping
+        return this.isSleeping;
+    }
+
+    sleep() {
+        // Legacy method, maybe just boost energy now?
+        this.stats.energy = 100;
+        this.save();
     }
 
     addXp(amount) {
@@ -93,11 +114,18 @@ class Pet {
         return false;
     }
 
+    getAge() {
+        const diff = Date.now() - this.createdAt;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        return days;
+    }
+
     getstatus() {
         // Determine visual state based on stats
         if (this.stats.health < 30) return 'sick';
-        if (this.stats.energy < 30) return 'sleeping'; // Auto sleep if too tired? Or just look tired
-        if (this.isWorking) return 'working'; // Override others if working, but health/energy take precedence if critical
+        if (this.isSleeping) return 'sleeping'; // Explicit sleep toggle
+        if (this.stats.energy < 30) return 'sleeping'; // Auto sleep if too tired
+        if (this.isWorking) return 'working';
         if (this.stats.hydration < 30) return 'thirsty';
         if (this.stats.happiness < 30) return 'sad';
         return 'happy';

@@ -54,7 +54,8 @@ function sendUpdate() {
             stats: pet.stats,
             levelInfo: pet.levelInfo,
             tasks: taskManager.getTasks(),
-            petState: pet.getstatus()
+            petState: pet.getstatus(),
+            age: pet.getAge()
         });
     }
 }
@@ -130,7 +131,8 @@ ipcMain.on('drink-water', () => {
 });
 
 ipcMain.on('sleep-pet', () => {
-    pet.sleep();
+    // pet.sleep(); // Old instant fill
+    pet.toggleSleep(); // New toggle
     sendUpdate();
 });
 

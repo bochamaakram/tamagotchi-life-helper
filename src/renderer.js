@@ -45,8 +45,8 @@ function updateUI(data) {
     petEmoji.textContent = MOOD_EMOJIS[petState] || MOOD_EMOJIS['default'];
     petMood.textContent = petState.charAt(0).toUpperCase() + petState.slice(1);
 
-    // Level & Coins
-    levelVal.textContent = `${levelInfo.level} | 🪙 ${levelInfo.coins || 0}`;
+    // Level & Coins & Age
+    levelVal.textContent = `Lvl ${levelInfo.level} | 🪙 ${levelInfo.coins || 0} | 📅 ${data.age}d`;
 
     // Stats
     barHealth.style.width = `${stats.health}%`;
