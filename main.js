@@ -138,19 +138,7 @@ ipcMain.on('sleep-pet', () => {
     sendUpdate();
 });
 
-ipcMain.on('buy-item', (event, itemId) => {
-    // Simplified Shop Logic
-    const prices = { 'bg-forest': 50, 'bg-space': 100, 'skin-cat': 200 };
-    const price = prices[itemId];
 
-    if (price && pet.spendCoins(price)) {
-        // In a real app, store inventory. For now, we just acknowledge the transaction.
-        event.sender.send('shop-success', itemId);
-        sendUpdate();
-    } else {
-        event.sender.send('shop-error', 'Not enough coins!');
-    }
-});
 
 ipcMain.on('toggle-work', () => {
     const isWorking = pet.toggleWork();

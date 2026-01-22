@@ -17,7 +17,7 @@ const taskList = document.getElementById('task-list');
 const btnWater = document.getElementById('btn-water');
 const btnSleep = document.getElementById('btn-sleep');
 const btnWork = document.getElementById('btn-work');
-const btnShop = document.getElementById('btn-shop'); // Placeholder
+
 const btnMinimize = document.getElementById('minimize-btn');
 const btnAlwaysOnTop = document.getElementById('always-on-top-btn');
 
@@ -62,17 +62,9 @@ ipcRenderer.on('show-notification', (event, { title, body }) => {
     new Notification(title, { body });
 });
 
-ipcRenderer.on('shop-success', (event, itemId) => {
-    alert(`Bought ${itemId}!`);
-    // Logic to change bg or skin would go here
-    if (itemId.startsWith('bg-')) {
-        document.body.className = itemId;
-    }
-});
 
-ipcRenderer.on('shop-error', (event, msg) => {
-    alert(msg);
-});
+
+
 
 
 function renderTasks(tasks) {
@@ -136,8 +128,7 @@ btnAlwaysOnTop.addEventListener('click', () => {
     ipcRenderer.send('toggle-always-on-top');
 });
 
-const shopModal = document.getElementById('shop-modal');
-const closeShopBtn = document.getElementById('close-shop');
+
 // Onboarding Elements
 const onboardingOverlay = document.getElementById('onboarding-overlay');
 const startBtn = document.getElementById('start-btn');
@@ -175,38 +166,19 @@ function playPetAnimation(anim) {
 }
 
 // Interactions with Feedback
-btnShop.addEventListener('click', () => {
-    shopModal.classList.remove('hidden');
-});
 
-closeShopBtn.addEventListener('click', () => {
-    shopModal.classList.add('hidden');
-});
 
-document.querySelectorAll('.shop-item').forEach(item => {
-    item.addEventListener('click', () => {
-        const id = item.dataset.id;
-        // Highlight logic could go here
-        ipcRenderer.send('buy-item', id);
-    });
-});
+
+
+
 
 // Hooking into existing events for feedback
 // We need to modify existing listeners or add new generic ones if possible. 
 // For now, let's wrap the IPC calls or listen to replies.
 
-ipcRenderer.on('shop-success', (event, itemId) => {
-    const name = itemId.split('-')[1];
-    showToast(`Purchased ${name}! <i class="fas fa-check"></i>`);
-    const itemName = itemId.split('-')[1];
-    if (itemId.startsWith('bg-')) {
-        document.body.className = `bg-${itemName}`;
-    }
-});
 
-ipcRenderer.on('shop-error', (event, msg) => {
-    showToast(`<i class="fas fa-times-circle"></i> ${msg}`);
-});
+
+
 
 // Override buttons to add animations
 btnWater.addEventListener('click', () => {

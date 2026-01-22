@@ -307,29 +307,3 @@ body {
     border-radius: 10px;
     text-align: center;
 }
-
-.modal-content {
-    background: #2f3542;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    text-align: center;
-}
-
-.shop-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
-    cursor: pointer;
-}
-
-#close-shop {
-    background: #ff4757;
-    border: none;
-    padding: 5px 15px;
-    color: white;
-    border-radius: 5px;
-    margin-top: 10px;
-}
